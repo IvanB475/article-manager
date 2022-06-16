@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dtos/createArticleDto';
 
@@ -24,6 +24,18 @@ export class ArticlesController {
             return this.articlesService.createArticleService(articleInfo);
         } catch(err) {
             const ERR_MESSAGE = 'failed creating article';
+            const ERR_STATUS = 500;
+            throw new HttpException(ERR_MESSAGE, ERR_STATUS);
+        }
+    }
+
+
+    @Delete('/:id')
+    async deleteArticleController(@Param('id') articleId: number) {
+        try {
+            return this.articlesService.deleteArticleService(articleId);
+        } catch(err) {
+            const ERR_MESSAGE = 'failed while deleting article';
             const ERR_STATUS = 500;
             throw new HttpException(ERR_MESSAGE, ERR_STATUS);
         }

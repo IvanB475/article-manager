@@ -6,7 +6,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 })
 export class ArticleEntity extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column({ nullable: false })
@@ -15,6 +15,6 @@ export class ArticleEntity extends BaseEntity {
     @Column({ nullable: false })
     slug: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'date' })
     published_at: Date;
 }

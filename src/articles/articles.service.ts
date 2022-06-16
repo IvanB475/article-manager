@@ -28,4 +28,14 @@ export class ArticlesService {
         }
         return responseToUser;
     }
+
+    //handle case if article with that id doesnt exist
+    async deleteArticleService(articleId: number) {
+        await this.entityManager.delete(ArticleEntity, { id: articleId });
+        const SUCCESS_MESSAGE = 'deleted the article';
+        const responseToUser = {
+            message: SUCCESS_MESSAGE
+        }
+        return responseToUser;
+    }
 }
