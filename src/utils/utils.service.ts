@@ -16,10 +16,10 @@ export class UtilsService {
     }
 
 
-    generateToken(id: number, role: string) {
+    generateToken(id: string) {
         const TOKEN_SECRET = this.appConfigService.token_secret;
 
-        const token = jwt.sign({ userId: id, userRole: role }, TOKEN_SECRET, {
+        const token = jwt.sign({ userId: id }, TOKEN_SECRET, {
             expiresIn: '1h'
         })
 
@@ -32,13 +32,6 @@ export class UtilsService {
         const userId = decoded['userId'];
         return userId;
     }
-
-    getUserRoleFromToken(token: string) {
-        const decoded = jwt.decode(token);
-        const userRole = decoded['userRole'];
-        return userRole;
-    }
-
 
     async validateLogin(password: string, hashedPassword: string) {
         return await bcrypt.compare(password, hashedPassword);
