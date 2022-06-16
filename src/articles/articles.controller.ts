@@ -1,4 +1,6 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { schema } from 'src/validation/joiSchema';
+import { JoiValidationPipe } from 'src/validation/joiValidationPipe';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dtos/createArticleDto';
 
@@ -19,10 +21,11 @@ export class ArticlesController {
     }
 
     @Post('/create')
+    @UsePipes(new JoiValidationPipe(schema.createArticle))
     async createArticleController(@Body() articleInfo: CreateArticleDto) {
         try {
             return this.articlesService.createArticleService(articleInfo);
-        } catch(err) {
+        } catch (err) {
             const ERR_MESSAGE = 'failed creating article';
             const ERR_STATUS = 500;
             throw new HttpException(ERR_MESSAGE, ERR_STATUS);
@@ -34,7 +37,7 @@ export class ArticlesController {
     async deleteArticleController(@Param('id') articleId: number) {
         try {
             return this.articlesService.deleteArticleService(articleId);
-        } catch(err) {
+        } catch (err) {
             const ERR_MESSAGE = 'failed while deleting article';
             const ERR_STATUS = 500;
             throw new HttpException(ERR_MESSAGE, ERR_STATUS);
