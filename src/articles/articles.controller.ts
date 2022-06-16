@@ -1,4 +1,6 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { All, Body, Controller, Delete, Get, HttpException, Param, Post, Query, Request, Response, UsePipes, ValidationPipe } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { response } from 'express';
 import { schema } from 'src/validation/joiSchema';
 import { JoiValidationPipe } from 'src/validation/joiValidationPipe';
 import { ArticlesService } from './articles.service';
@@ -56,5 +58,12 @@ export class ArticlesController {
             const ERR_STATUS = 500;
             throw new HttpException(ERR_MESSAGE, ERR_STATUS);
         }
+    }
+
+    @All('*')
+    async wrongRouteOrMethod(@Request() req, @Response() response) {
+            response.status = 404;
+            const ERR_MESSAGE = `Route on path ${req.path} with ${req.method} does not exist`;
+            response.send({message: ERR_MESSAGE});
     }
 }
