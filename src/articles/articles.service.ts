@@ -20,6 +20,7 @@ export class ArticlesService {
         newArticle.title = title;
         newArticle.slug = slug;
         newArticle.published_at = published_at || null;
+        newArticle.private = articleInfo.private;
         await newArticle.save();
 
         const SUCCESS_MESSAGE = 'created new article';
@@ -40,7 +41,11 @@ export class ArticlesService {
     }
 
 
-    async getPublishedArticlesService(limit: number, page: number) {
-        return await this.entityManager.createQueryBuilder(ArticleEntity, 'article').where('article.published_at <= NOW()').take(limit).skip(page).getMany();
+    async getPublishedArticlesService(limit: number, page: number, authenticated: boolean) {
+        if (authenticated) {
+            return await this.entityManager.createQueryBuilder(ArticleEntity, 'article').where('article.published_at < NOW()').take(limit).skip(page).getMany();
+        } else {
+            return await this.entityManager.createQueryBuilder(ArticleEntity, 'article').where('article.published_at <= NOW()').andWhere('article.private = false').take(limit).skip(page).getMany();
+        }
     }
 }

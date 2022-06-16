@@ -17,4 +17,7 @@ export class ArticleEntity extends BaseEntity {
 
     @Column({ nullable: true, type: 'date' })
     published_at: Date;
+
+    @Column({ default: false, type: 'boolean' })
+    private: boolean;
 }

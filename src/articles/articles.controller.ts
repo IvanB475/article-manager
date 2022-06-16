@@ -9,11 +9,15 @@ export class ArticlesController {
     constructor(private articlesService: ArticlesService) { }
 
     @Get('/published')
-    async getPulishedArticlesController(@Query('limit') limit: number, @Query('page') page: number) {
+    async getPulishedArticlesController(@Query('limit') limit: number, @Query('page') page: number, @Request() req) {
         try {
+            let authenticated;
+            if(req?.cookies?.access_token) {
+                authenticated = true;
+            }
             const resultsToReturn = limit || 10;
             const howManyPagesToSkip = page - 1 >= 0 ? page - 1 : 0;
-            return await this.articlesService.getPublishedArticlesService(resultsToReturn, howManyPagesToSkip);
+            return await this.articlesService.getPublishedArticlesService(resultsToReturn, howManyPagesToSkip, authenticated);
         } catch (err) {
             console.log(err);
             const ERR_MESSAGE = 'failed fetching articles';
