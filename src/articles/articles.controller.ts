@@ -28,9 +28,13 @@ export class ArticlesController {
 
 
     @Get('/:id')
-    async getArticleController(@Param('id') articleId: number) {
+    async getArticleController(@Param('id') articleId: number, @Request() req) {
         try {
-            return this.articlesService.getArticleService(articleId);
+            let authenticated;
+            if(req?.cookies?.access_token) {
+                authenticated = true;
+            }
+            return this.articlesService.getArticleService(articleId, authenticated);
         } catch (err) {
             const ERR_MESSAGE = 'failed fetching article';
             const ERR_STATUS = 500;

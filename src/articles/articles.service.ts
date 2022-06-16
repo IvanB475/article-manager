@@ -8,9 +8,11 @@ export class ArticlesService {
     constructor(private entityManager: EntityManager) {
 
     }
-    async getArticleService(articleId: number) {
-        const article = await this.entityManager.findOneByOrFail(ArticleEntity, { id: articleId });
-        return article;
+    async getArticleService(articleId: number, authenticated: boolean) {
+        if (authenticated) {
+            return await this.entityManager.findOneBy(ArticleEntity, { id: articleId });
+        }
+        return await this.entityManager.findOneBy(ArticleEntity, { id: articleId, private: false });
     }
 
     async createArticleService(articleInfo: CreateArticleDto) {
