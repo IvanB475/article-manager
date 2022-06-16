@@ -7,8 +7,8 @@ export class AppConfigService {
     constructor(private readonly configService: ConfigService<EnvironmentVariablesInterface>) {
     }
 
-    get port(): number {
-        return this.configService.get<number>('port');
+    get api_port(): number {
+        return this.configService.get<number>('api_port');
     }
 
     get db_host(): string {

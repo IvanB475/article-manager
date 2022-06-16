@@ -4,6 +4,6 @@ export interface EnvironmentVariablesInterface {
     db_database: string,
     db_username: string,
     db_password: string,
-    port: number;
+    api_port: number;
     token_secret: string;
 }

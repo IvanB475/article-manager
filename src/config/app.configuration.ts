@@ -2,7 +2,7 @@
 
 
 export default () => ({
-    port: parseInt(process.env.PORT, 10) || 3000,
+    api_port: parseInt(process.env.API_PORT, 10) || 3000,
     db_host: process.env.DB_HOST,
     db_port: parseInt(process.env.DB_PORT, 10) || 5432,
     db_database: process.env.DB_DATABASE,
