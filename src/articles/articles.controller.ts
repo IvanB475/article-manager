@@ -1,12 +1,26 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { schema } from 'src/validation/joiSchema';
 import { JoiValidationPipe } from 'src/validation/joiValidationPipe';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dtos/createArticleDto';
 
-@Controller('articles')
+@Controller('api/articles')
 export class ArticlesController {
     constructor(private articlesService: ArticlesService) { }
+
+    @Get('/published')
+    async getPulishedArticlesController(@Query('limit') limit: number, @Query('page') page: number) {
+        try {
+            const resultsToReturn = limit || 10;
+            const howManyPagesToSkip = page - 1 >= 0 ? page - 1 : 0;
+            return await this.articlesService.getPublishedArticlesService(resultsToReturn, howManyPagesToSkip);
+        } catch (err) {
+            console.log(err);
+            const ERR_MESSAGE = 'failed fetching articles';
+            const ERR_STATUS = 500;
+            throw new HttpException(ERR_MESSAGE, ERR_STATUS);
+        }
+    }
 
 
     @Get('/:id')

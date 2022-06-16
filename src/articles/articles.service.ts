@@ -38,4 +38,9 @@ export class ArticlesService {
         }
         return responseToUser;
     }
+
+
+    async getPublishedArticlesService(limit: number, page: number) {
+        return await this.entityManager.createQueryBuilder(ArticleEntity, 'article').where('article.published_at <= NOW()').take(limit).skip(page).getMany();
+    }
 }
