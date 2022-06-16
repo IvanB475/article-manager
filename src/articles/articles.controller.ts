@@ -1,6 +1,4 @@
-import { All, Body, Controller, Delete, Get, HttpException, Param, Post, Query, Request, Response, UsePipes, ValidationPipe } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { response } from 'express';
+import { All, Body, Controller, Delete, Get, HttpException, Param, Post, Query, Request, Response, UsePipes } from '@nestjs/common';
 import { schema } from 'src/validation/joiSchema';
 import { JoiValidationPipe } from 'src/validation/joiValidationPipe';
 import { ArticlesService } from './articles.service';

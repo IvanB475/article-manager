@@ -29,4 +29,8 @@ export class AppConfigService {
     get db_password(): string {
         return this.configService.get<string>('db_password')
     }
+
+    get token_secret(): string {
+        return this.configService.get<string>('token_secret')
+    }
 }
