@@ -1,4 +1,5 @@
 ## Description
+Api available for testing at: http://3.71.82.164:3050/
 Small code challenge written in nest.js(express.js) using typeorm&postgres. To start the app please create .env file and provide env variables as per .env.example file. Note: this code does not create database, so you do have to create it on your own or have it already.
 
 ## Installation
